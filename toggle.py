@@ -1,13 +1,22 @@
-import PySimpleGUI as sg
 import threading
 import keyboard
 import time
 
-sg.theme('DarkTanBlue')
+
+#store the toggle state
 toggle = False
+
+#variables for interval and keyb
 interval = 6.5
 keyb = 'space'
 
+#function to start the space pressing thread
+def start_space_thread():
+    space_thread = threading.Thread(target=press_space)
+    space_thread.daemon = True
+    space_thread.start()
+
+# space pressing function
 def press_space():
     global toggle
     while True:
@@ -16,38 +25,21 @@ def press_space():
             keyboard.release(keyb)
         time.sleep(interval)
 
-space_thread = threading.Thread(target=press_space)
-space_thread.daemon = True
-space_thread.start()
+def set_toggle_state(value):
+    global toggle
+    toggle = value
 
-#This is an assortment of keybinds
-options = ['Escape', 'Space', 'BackSpace', 'Tab', 'Linefeed', 'Clear', 'Return', 'Pause', 'Scroll_Lock', 'Sys_Req', 'Delete', 'Home', 'Left', 'Up', 'Right', 'Down', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-
-layout = [
-    [sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')],
-    [sg.Combo(options, key='-KEY-', default_value='space',size=[10,5], readonly=True)],
-    [sg.Text('Interval (s)'), sg.InputText(str(interval), key='-INTERVAL-', size=(5,5))],
-    [sg.Button('Exit')]
-]
-
-window = sg.Window('clicker', layout, keep_on_top=True)
-
-def toggle_checkbox():
-    window['-TOGGLE-'](not window['-TOGGLE-'].Get())
-
-
-keyboard.add_hotkey('ctrl+shift', toggle_checkbox)
-
-while True:
-    event, values = window.read(timeout=100)
-    if event == sg.WIN_CLOSED or event == 'Exit':
-        break
-
-    toggle = values['-TOGGLE-']
-
+def set_interval(value):
+    global interval
     try:
-        interval = float(values['-INTERVAL-'])
+        interval = float(value)
     except ValueError:
         pass
-    keyb = values['-KEY-']
-window.close()
+
+def set_keyb(value):
+    global keyb
+    keyb = value
+
+
+if __name__ == "__main__":
+    start_space_thread() 
