@@ -10,5 +10,5 @@ while (getkeystate("left", "P")) {
         Sleep(40)
 }
 } ; V1toV2: Added Bracket before hotkey or Hotstring
-+`::ExitApp()
+
 return
