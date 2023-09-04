@@ -5,9 +5,9 @@ $Right::
 { ; V1toV2: Added bracket
 while (getkeystate("Right", "P")) {
 		Send("{d down}")
-        Sleep(40)
+        Sleep(5)
         Send("{d up}")
-        Sleep(40)
+        Sleep(5)
 }
 } ; V1toV2: Added Bracket before hotkey or Hotstring
 
