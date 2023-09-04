@@ -29,7 +29,7 @@ lay_confuse_control = [sg.Checkbox('Confuse Controls/(ctrl+`)', key='-CONFUSECNT
 lay_toggle = [[sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')], [sg.Combo(options, key='-KEY-', default_value='space', size=[10, 5], readonly=True)],
               [sg.Text('Interval (s)'), sg.InputText('6.5', key='-INTERVAL-', size=(5, 5))]]
 
-compile = [lay_45cam, lay_auto_nexus, lay_slow_move, lay_confuse_control, lay_toggle]
+compile = [lay_toggle, lay_confuse_control, lay_45cam, lay_slow_move, lay_auto_nexus]
 layout = []
 
 for i in compile:
