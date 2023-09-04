@@ -6,18 +6,34 @@ import confusecntrl
 sg.theme('DarkTanBlue')
 
 # This is an assortment of keybinds
-options = ['Escape', 'Space', 'BackSpace', 'Tab', 'Linefeed', 'Clear', 'Return', 'Pause', 'Scroll_Lock', 'Sys_Req', 'Delete', 'Home', 'Left', 'Up', 'Right', 'Down', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+options = ['Escape', 'Space', 'BackSpace', 'Tab', 'Linefeed',
+           'Clear', 'Return', 'Pause', 'Scroll_Lock', 'Sys_Req',
+           'Delete', 'Home', 'Left', 'Up', 'Right', 'Down', 'b',
+           'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+           'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
+           'y', 'z']
+
 speeds = ['20','30','40','50']
-layout = [
-    [sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')],
-    [sg.Checkbox('Slow Move', key='-SLOWMOVE-')],
-    [sg.Combo(speeds, key='-SPEED-', default_value='50', size=(10, 5))],
-    [sg.Checkbox('Confuse Controls/(ctrl+`)', key='-CONFUSECNTRL-')],
-    [sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')],
-    [sg.Combo(options, key='-KEY-', default_value='space', size=[10, 5], readonly=True)],
-    [sg.Text('Interval (s)'), sg.InputText('6.5', key='-INTERVAL-', size=(5, 5))],
-    [sg.Button('Exit')]
-]
+
+break_count = 0
+def lay_break():
+    global break_count
+    break_count += 1
+    return [sg.HorizontalSeparator(key = ('break', break_count))]
+
+lay_auto_nexus = [sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')]
+lay_slow_move = [sg.Checkbox('Slow Move', key='-SLOWMOVE-')], [sg.Combo(speeds, key='-SPEED-', default_value='50', size=(10, 5))]
+lay_confuse_control = [sg.Checkbox('Confuse Controls/(ctrl+`)', key='-CONFUSECNTRL-')]
+lay_toggle = [[sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')], [sg.Combo(options, key='-KEY-', default_value='space', size=[10, 5], readonly=True)],
+              [sg.Text('Interval (s)'), sg.InputText('6.5', key='-INTERVAL-', size=(5, 5))]]
+
+compile = [lay_auto_nexus, lay_slow_move, lay_confuse_control, lay_toggle]
+layout = []
+
+for i in compile:
+    layout.append(i)
+    layout.append(lay_break())
+layout = layout[:-1]
 
 window = sg.Window('clicker', layout, keep_on_top=True)
 
