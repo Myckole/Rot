@@ -3,6 +3,7 @@ import toggle
 import keyboard
 import confusecntrl
 import cam45
+import slowcntrl
 
 sg.theme('DarkTanBlue')
 
@@ -45,12 +46,16 @@ def toggle_checkbox():
 def confuse_checkbox():
     window['-CONFUSECNTRL-'](not window['-CONFUSECNTRL-'].Get())
 
+def slow_checkbox():
+    window['-SLOWMOVE-'](not window['-SLOWMOVE-'].Get())
+
 def turn_l():
     cam45.turn_l()
 
 def turn_r():
     cam45.turn_r()
 
+keyboard.add_hotkey('shift+`', slow_checkbox)
 keyboard.add_hotkey('ctrl+shift', toggle_checkbox)
 keyboard.add_hotkey('ctrl+`', confuse_checkbox)
 keyboard.add_hotkey('[', turn_l)
@@ -66,7 +71,7 @@ def get_gui_input():
         toggle.set_keyb(values['-KEY-'])
         confusecntrl.set_cntrl_state(values['-CONFUSECNTRL-'])
         cam45.set_speed(values['-CAMSPEED-'])
-        checkbox2_value = values['-SLOWMOVE-']
+        slowcntrl.set_slow_state(values['-SLOWMOVE-'])
         selected_option = values['-SPEED-']
 
     window.close()
