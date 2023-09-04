@@ -2,6 +2,7 @@ import PySimpleGUI as sg
 import toggle
 import keyboard
 import confusecntrl
+import cam45
 
 sg.theme('DarkTanBlue')
 
@@ -21,13 +22,14 @@ def lay_break():
     break_count += 1
     return [sg.HorizontalSeparator(key = ('break', break_count))]
 
+lay_45cam = [sg.Text('Cam spd:'), sg.Combo(['slow', 'normal', 'fast'], key = '-CAMSPEED-', readonly=True, default_value='normal')], [sg.Text("'[' and ']' keybinds")]
 lay_auto_nexus = [sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')]
 lay_slow_move = [sg.Checkbox('Slow Move', key='-SLOWMOVE-')], [sg.Combo(speeds, key='-SPEED-', default_value='50', size=(10, 5))]
 lay_confuse_control = [sg.Checkbox('Confuse Controls/(ctrl+`)', key='-CONFUSECNTRL-')]
 lay_toggle = [[sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')], [sg.Combo(options, key='-KEY-', default_value='space', size=[10, 5], readonly=True)],
               [sg.Text('Interval (s)'), sg.InputText('6.5', key='-INTERVAL-', size=(5, 5))]]
 
-compile = [lay_auto_nexus, lay_slow_move, lay_confuse_control, lay_toggle]
+compile = [lay_45cam, lay_auto_nexus, lay_slow_move, lay_confuse_control, lay_toggle]
 layout = []
 
 for i in compile:
@@ -43,8 +45,16 @@ def toggle_checkbox():
 def confuse_checkbox():
     window['-CONFUSECNTRL-'](not window['-CONFUSECNTRL-'].Get())
 
+def turn_l():
+    cam45.turn_l()
+
+def turn_r():
+    cam45.turn_r()
+
 keyboard.add_hotkey('ctrl+shift', toggle_checkbox)
 keyboard.add_hotkey('ctrl+`', confuse_checkbox)
+keyboard.add_hotkey('[', turn_l)
+keyboard.add_hotkey(']', turn_r)
 
 def get_gui_input():
     while True:
@@ -55,6 +65,7 @@ def get_gui_input():
         toggle.set_interval(values['-INTERVAL-'])
         toggle.set_keyb(values['-KEY-'])
         confusecntrl.set_cntrl_state(values['-CONFUSECNTRL-'])
+        cam45.set_speed(values['-CAMSPEED-'])
         checkbox2_value = values['-SLOWMOVE-']
         selected_option = values['-SPEED-']
 
