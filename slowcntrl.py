@@ -28,6 +28,10 @@ def toggle_slow_script():
     
     if slow_script_running == True:
         slow_script_running = False
+        slow_process1.terminate()
+        slow_process2.terminate()
+        slow_process3.terminate()
+        slow_process4.terminate()
 
     else:
         # Start the AHK script
