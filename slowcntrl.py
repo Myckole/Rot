@@ -13,6 +13,7 @@ slow_process = None  # Initialize slow_process
 # hotkey to toggle the slow script
 toggle_hotkey = 'shift + `'
 
+# checks if checkbox is changed
 def set_slow_state(value):
     global slow_script_running
     if value != slow_script_running:
