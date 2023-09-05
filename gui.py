@@ -65,6 +65,8 @@ def get_gui_input():
     while True:
         event, values = window.read(timeout=100)
         if event == sg.WIN_CLOSED or event == 'Exit':
+            confusecntrl.set_cntrl_state(False)
+            slowcntrl.set_slow_state(False)
             break
         toggle.set_toggle_state(values['-TOGGLE-'])
         toggle.set_interval(values['-INTERVAL-'])
