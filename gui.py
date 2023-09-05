@@ -24,13 +24,13 @@ def lay_break():
     return [sg.HorizontalSeparator(key = ('break', break_count))]
 
 lay_45cam = [sg.Text('Cam spd:'), sg.Combo(['slow', 'normal', 'fast'], key = '-CAMSPEED-', readonly=True, default_value='normal')], [sg.Text("'[' and ']' keybinds")]
-lay_auto_nexus = [sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')]
-lay_slow_move = [sg.Checkbox('Slow Move', key='-SLOWMOVE-')], [sg.Combo(speeds, key='-SPEED-', default_value='50', size=(10, 5))]
+#lay_auto_nexus = [sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')]
+lay_slow_move = [sg.Checkbox('Slow Move/(shift+`)', key='-SLOWMOVE-')]
 lay_confuse_control = [sg.Checkbox('Confuse Controls/(ctrl+`)', key='-CONFUSECNTRL-')]
 lay_toggle = [[sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')], [sg.Combo(options, key='-KEY-', default_value='space', size=[10, 5], readonly=True)],
               [sg.Text('Interval (s)'), sg.InputText('6.5', key='-INTERVAL-', size=(5, 5))]]
 
-compile = [lay_toggle, lay_confuse_control, lay_45cam, lay_slow_move, lay_auto_nexus]
+compile = [lay_toggle, lay_confuse_control, lay_45cam, lay_slow_move]
 layout = []
 
 for i in compile:
@@ -72,7 +72,6 @@ def get_gui_input():
         confusecntrl.set_cntrl_state(values['-CONFUSECNTRL-'])
         cam45.set_speed(values['-CAMSPEED-'])
         slowcntrl.set_slow_state(values['-SLOWMOVE-'])
-        selected_option = values['-SPEED-']
 
     window.close()
 
