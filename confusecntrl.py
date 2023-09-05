@@ -1,7 +1,5 @@
 import subprocess
-import keyboard  
 import threading
-
 
 ahk_script_path = './confuse.ahk'
 
@@ -12,29 +10,30 @@ ahk_process = None  # Initialize ahk_process
 # hotkey to toggle the AHK script
 toggle_hotkey = 'ctrl + `'
 
+# checks if the checkbox is changed
 def set_cntrl_state(value):
     global ahk_script_running
-    ahk_script_running = value
+    if value != ahk_script_running:
+        ahk_script_running = value
+        toggle_ahk_script()
 
 def start_confuse_thread():
     confuse_thread = threading.Thread(target=toggle_ahk_script)
     confuse_thread.daemon = True
     confuse_thread.start()
+
 # Function to toggle the AHK script
 def toggle_ahk_script():
     global ahk_script_running, ahk_process  
     
     if ahk_script_running == True:
-        ahk_script_running = False
+        ahk_process = subprocess.Popen(['AutoHotKey.exe', ahk_script_path])
 
-    else:
-        # Start the AHK script
-        ahk_process = subprocess.Popen(['AutoHotkey.exe', ahk_script_path])
-        ahk_script_running = True
-
-# Register the hotkey to toggle the AHK script
-keyboard.add_hotkey(toggle_hotkey, toggle_ahk_script)
-
+    elif ahk_script_running == False:
+        try:
+            ahk_process.terminate()
+        except:
+            pass
 
 # Keep the script running
 
@@ -42,5 +41,4 @@ if __name__ == "__main__":
     start_confuse_thread() 
 
 
-    
     
