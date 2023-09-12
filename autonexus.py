@@ -62,7 +62,7 @@ def autonex_script():
                     r_pressed = False
 
                 current_color = new_color
-                print("Current HEX color at ({}, {}): {}".format(target_x, target_y, current_color))
+                #print("Current HEX color at ({}, {}): {}".format(target_x, target_y, current_color))
             time.sleep(0.05)  
             
 # initialize r_pressed as False
