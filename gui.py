@@ -41,11 +41,8 @@ layout = layout[:-1]
 
 window = sg.Window('clicker', layout, keep_on_top=True)
 
-def nexus_checkbox():
-    window['-TOGGLE-'](not window['-TOGGLE-'].Get())
-
 def toggle_checkbox():
-    window['-AUTONEXUS-'](not window['-AUTONEXUS-'].Get())
+    window['-TOGGLE-'](not window['-TOGGLE-'].Get())
 
 def confuse_checkbox():
     window['-CONFUSECNTRL-'](not window['-CONFUSECNTRL-'].Get())
