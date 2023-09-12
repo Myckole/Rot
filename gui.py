@@ -4,6 +4,7 @@ import keyboard
 import confusecntrl
 import cam45
 import slowcntrl
+import autonexus
 
 sg.theme('DarkTanBlue')
 
@@ -15,7 +16,7 @@ options = ['Escape', 'Space', 'BackSpace', 'Tab', 'Linefeed',
            'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x',
            'y', 'z']
 
-speeds = ['20','30','40','50']
+NexusHPOptions = ['5','10','20','30','40','50','60','70','80','90']
 
 break_count = 0
 def lay_break():
@@ -24,13 +25,13 @@ def lay_break():
     return [sg.HorizontalSeparator(key = ('break', break_count))]
 
 lay_45cam = [sg.Text('Cam spd:'), sg.Combo(['slow', 'normal', 'fast'], key = '-CAMSPEED-', readonly=True, default_value='normal')], [sg.Text("'[' and ']' keybinds")]
-#lay_auto_nexus = [sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')]
+lay_auto_nexus = [[sg.Checkbox('Auto Nexus', key='-AUTONEXUS-')], [sg.Combo(NexusHPOptions, key='-HP-', default_value='30', size=[10, 5], readonly=True)]]
 lay_slow_move = [sg.Checkbox('Slow Move/(shift+`)', key='-SLOWMOVE-')]
 lay_confuse_control = [sg.Checkbox('Confuse Controls/(ctrl+`)', key='-CONFUSECNTRL-')]
 lay_toggle = [[sg.Checkbox('Toggle/(ctrl+shift)', key='-TOGGLE-')], [sg.Combo(options, key='-KEY-', default_value='space', size=[10, 5], readonly=True)],
               [sg.Text('Interval (s)'), sg.InputText('6.5', key='-INTERVAL-', size=(5, 5))]]
 
-compile = [lay_toggle, lay_confuse_control, lay_45cam, lay_slow_move]
+compile = [lay_auto_nexus,lay_toggle, lay_confuse_control, lay_45cam, lay_slow_move]
 layout = []
 
 for i in compile:
@@ -40,8 +41,11 @@ layout = layout[:-1]
 
 window = sg.Window('clicker', layout, keep_on_top=True)
 
-def toggle_checkbox():
+def nexus_checkbox():
     window['-TOGGLE-'](not window['-TOGGLE-'].Get())
+
+def toggle_checkbox():
+    window['-AUTONEXUS-'](not window['-AUTONEXUS-'].Get())
 
 def confuse_checkbox():
     window['-CONFUSECNTRL-'](not window['-CONFUSECNTRL-'].Get())
@@ -64,7 +68,7 @@ keyboard.add_hotkey(']', turn_r)
 def get_gui_input():
     while True:
         event, values = window.read(timeout=100)
-        if event == sg.WIN_CLOSED or event == 'Exit':
+        if event == sg.WIN_CLOSED or event == 'Ejxit':
             confusecntrl.set_cntrl_state(False)
             slowcntrl.set_slow_state(False)
             break
@@ -74,10 +78,15 @@ def get_gui_input():
         confusecntrl.set_cntrl_state(values['-CONFUSECNTRL-'])
         cam45.set_speed(values['-CAMSPEED-'])
         slowcntrl.set_slow_state(values['-SLOWMOVE-'])
+        autonexus.set_hp(values['-HP-'])
+        autonexus.set_auto_state(values['-AUTONEXUS-'])
 
     window.close()
 
 if __name__ == "__main__":
     toggle.start_space_thread()  
+
+    autonexus.set_auto_state(False)
+    autonexus.start_autonex_thread()
 
     get_gui_input()
