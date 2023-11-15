@@ -3,8 +3,8 @@
 Macro and quality of life supplemental program for the MMORPG Realm of The Mad God.
 
 ## Authors
-Nihal Abdul Muneer (https://github.com/BballNihal)
-Michael Nguyen (https://github.com/Myckole)
+* Nihal Abdul Muneer (https://github.com/BballNihal)
+* Michael Nguyen (https://github.com/Myckole)
 
 ## Dependencies
 The following programs are necessary to have installed:
