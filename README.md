@@ -1,6 +1,7 @@
 # ROT
 
 Macro and quality of life supplemental program for the MMORPG Realm of The Mad God.
+:)
 
 ## Authors
 * Nihal Abdul Muneer (https://github.com/BballNihal)
